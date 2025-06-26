@@ -12,4 +12,9 @@ showRouter.post("/add", protectAdmin, addShow);
 showRouter.get("/all", getShows);
 showRouter.get("/:movieId", getShow);
 
+
+showRouter.get("/all", (req, res) => {
+  console.log("✅ /api/show/all hit");
+  getShows(req, res);
+});
 export default showRouter;
