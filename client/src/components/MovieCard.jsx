@@ -5,6 +5,7 @@ import timeFormat from "../lib/timeFormat";
 
 const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
+
   return (
     <div className="flex flex-col justify-between p-3 bg-gray-800">
       <img
