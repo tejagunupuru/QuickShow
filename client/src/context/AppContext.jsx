@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
+
 export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
 
@@ -15,6 +16,7 @@ export const AppProvider = ({ children }) => {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
   const { user } = useUser();
   const { getToken } = useAuth();
+
   const location = useLocation();
   const navigate = useNavigate();
   const fetchIsAdmin = async () => {
