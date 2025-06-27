@@ -99,21 +99,32 @@ export const addShow = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-//api to get all shows
+
 export const getShows = async (req, res) => {
   try {
     const shows = await Show.find({ showDateTime: { $gte: new Date() } })
       .populate("movie")
       .sort({ showDateTime: 1 });
 
-    //filter unique shows
-    const uniqueShows = new Set(shows.map((show) => show.movie));
-    res.json({ success: true, shows: Array.from(uniqueShows) });
+    // ✅ Filter out shows where movie is null (bad reference)
+    const validShows = shows.filter((show) => show.movie && show.movie._id);
+
+    // ✅ Deduplicate movies
+    const uniqueMap = new Map();
+    validShows.forEach((show) => {
+      const movieId = show.movie._id;
+      if (!uniqueMap.has(movieId)) {
+        uniqueMap.set(movieId, show.movie);
+      }
+    });
+
+    res.json({ success: true, shows: Array.from(uniqueMap.values()) });
   } catch (error) {
     console.error("❌ Error getting shows:", error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
 //api to get single show from the database
 export const getShow = async (req, res) => {
   try {
@@ -137,3 +148,5 @@ export const getShow = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
