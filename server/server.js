@@ -14,22 +14,15 @@ import { stripeWebhooks } from "./controllers/stripeWebhooks.js";
 const app = express();
 const port = 3000;
 await connectDb();
-
-
-
-
-app.use(express.json());
-app.use(cors());
-
-
-app.use(clerkMiddleware());
 app.use(
   "/api/stripe",
   express.raw({ type: "application/json" }),
   stripeWebhooks
 );
+app.use(express.json());
+app.use(cors());
 
-
+app.use(clerkMiddleware());
 app.use("/api/show", showRouter);
 app.use("/api/booking", bookingRouter);
 app.use("/api/admin", adminRouter);

@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import evans from "../assets/cast/chris_evans.jpeg";
+import scarlet from "../assets/cast/scarlett_johansson.jpeg";
+import junior from "../assets/cast/robert_downey_jr.jpeg";
+import chris from "../assets/cast/chris_hemsworth.jpeg";
 
 import BlurCircle from "../components/BlurCircle";
 import { Heart, PlayCircleIcon, StarIcon } from "lucide-react";
@@ -9,6 +13,15 @@ import MovieCard from "../components/MovieCard";
 import Loading from "../components/Loading";
 import { useAppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
+const castList = [
+  { name1: "Robert Downey Jr.", image1: junior },
+  { name1: "Chris Hemsworth", image1: chris },
+  { name1: "Chris Evans", image1: evans },
+  {
+    name1: "Scarlett Johansson",
+    image1: scarlet,
+  },
+];
 const MovieDetails = () => {
   const { id } = useParams();
   const [show, setShow] = useState(null);
@@ -70,7 +83,7 @@ const MovieDetails = () => {
           </p>
           <p>
             {timeFormat(show.movie.runtime)}.{"  "}
-            {show.movie.genres.map((genre) => genre.name).join(", ")}.{"  "}
+            {show.movie.genres.slice(0, 2).join(" | ")}{" "}
             {show.movie.release_date.split("-")[0]}
           </p>
           <div className="flex items-center flex-wrap gap-4 mt-4">
@@ -106,16 +119,17 @@ cursor-pointer active:scale-95"
         </div>
       </div>
       <p className="text-lg font-medium mt-20">Your Favorite Cast</p>
+
       <div className="overflow-x-auto no-scrollbar mt-8 pb-4">
         <div className="flex items-center gap-4 w-max px-4">
-          {show.movie.casts.slice(0, 12).map((cast, index) => (
+          {castList.map((cast, index) => (
             <div key={index} className="flex flex-col items-center text-center">
               <img
-                src={cast.profile_path}
-                alt=""
+                src={cast.image1}
+                alt={cast.name1}
                 className="rounded-full h-20 md:h-20 aspect-square object-cover"
               />
-              <p className="text-xs font-medium mt-3">{cast.name}</p>
+              <p className="text-xs font-medium mt-3">{cast.name1}</p>
             </div>
           ))}
         </div>

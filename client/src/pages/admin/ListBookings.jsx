@@ -9,25 +9,34 @@ export const ListBookings = () => {
   const { axios, getToken, user } = useAppContext();
   const [bookings, setBookings] = useState([]);
   const [isloading, setIsLoading] = useState(true);
+
   const getAllBookings = async () => {
     try {
-      const { data } = await axios.get(
-        "/api/admin/all-bookings", // Dynamic later if needed
-        {
-          headers: { Authorization: `Bearer ${await getToken()}` },
-        }
-      );
-      setBookings(data.bookings);
+      const { data } = await axios.get("/api/admin/all-bookings", {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+
+      console.log("✅ Bookings API Response:", data);
+
+      if (data && Array.isArray(data.bookings)) {
+        setBookings(data.bookings);
+      } else {
+        console.error("❌ Invalid bookings data:", data);
+        setBookings([]);
+      }
     } catch (error) {
-      console.error(error);
+      console.error("❌ Error fetching bookings:", error);
+      setBookings([]);
     }
     setIsLoading(false);
   };
+
   useEffect(() => {
     if (user) {
       getAllBookings();
     }
   }, [user]);
+
   return !isloading ? (
     <>
       <Title text1="List" text2="Bookings" />
@@ -48,12 +57,18 @@ export const ListBookings = () => {
                 key={item._id}
                 className="border-b border-primary/10 bg-primary/5 even:bg-primary/10"
               >
-                <td className="p-2 min-w-45 pl-5">{item.user.name}</td>
-                <td className="p-2">{item.show.movie.title}</td>
-                <td className="p-2">{dateFormate(item.show.showDateTime)}</td>
-                <td className="p-2">{item.bookedSeats.join(", ")}</td>
+                <td className="p-2 min-w-45 pl-5">
+                  {item.user?.name || "N/A"}
+                </td>
+                <td className="p-2">{item.show?.movie?.title || "N/A"}</td>
                 <td className="p-2">
-                  {currency} {item.amount}
+                  {item.show?.showDateTime
+                    ? dateFormate(item.show.showDateTime)
+                    : "N/A"}
+                </td>
+                <td className="p-2">{item.bookedSeats?.join(", ") || "N/A"}</td>
+                <td className="p-2">
+                  {currency} {item.amount || "0"}
                 </td>
               </tr>
             ))}
@@ -65,4 +80,5 @@ export const ListBookings = () => {
     <Loading />
   );
 };
+
 export default ListBookings;

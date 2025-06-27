@@ -82,8 +82,6 @@ export const createBooking = async (req, res) => {
     res.json({ success: "false", message: error.message });
   }
 };
-
-
 export const getOccupiedSeats = async (req, res) => {
   try {
     const { showId } = req.params;

@@ -8,9 +8,9 @@ const Footer = () => {
         <div className="md:max-w-96">
           <img className="w-36 h-auto" src={assets.logo} alt="logo" />
           <p className="mt-6 text-sm">
-            Lorem Ipsum has been the industry's standard dummy text ever since
-            the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book.
+            🎬 Thanks for choosing QuickShow! Your go-to destination for booking
+            movie tickets with ease. We’re hyped to have you onboard — now grab
+            your popcorn and enjoy the show! 🍿✨
           </p>
           <div className="flex items-center gap-2 mt-4">
             <img
@@ -42,14 +42,15 @@ const Footer = () => {
           <div>
             <h2 className="font-semibold mb-5">Get in touch</h2>
             <div className="text-sm space-y-2">
-              <p>+91 9346780429</p>
-              <p>tejagunupuru80@gmail.com</p>
+              <p>+91 9346781419</p>
+              <p>tejagunupuru200@gmail.com</p>
+              <p>Crafted with ❤ by Teja Gunupuru</p>
             </div>
           </div>
         </div>
       </div>
       <p className="pt-4 text-center text-sm pb-5">
-        Copyright {new Date().getFullYear()} © copyright at GretStack. All Right
+        Copyright {new Date().getFullYear()} © copyright at NovaStack. All Right
         Reserved.
       </p>
     </footer>
